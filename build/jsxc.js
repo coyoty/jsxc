@@ -2082,6 +2082,19 @@ jsxc.xmpp = {
 
       $(document).trigger('message.jsxc', [from, body]);
 
+      if (this.platform.is('cordova')) {
+            var date = new Date();
+            cordova.plugins.notification.local.schedule({
+                  id: 1,
+                  title: from,
+                  message: body,
+                  firstAt: date, // firstAt and at properties must be an IETF-compliant RFC 2822 timestamp
+                  every: 0 // this also could be minutes i.e. 25 (int)
+            });
+      }
+
+
+
       // create related otr object
       if (jsxc.master && !jsxc.otr.objects[bid]) {
          jsxc.otr.create(bid);
